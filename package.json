@@ -1,0 +1,22 @@
+{
+  "name": "bugy",
+  "version": "0.0.1",
+  "description": "providing some interesting things",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bootstrap.js",
+    "db": "mongod --dbpath ./data/db --auth"
+  },
+  "author": "Owen Yang",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "koa": "^1.1.0"
+  },
+  "dependencies": {
+    "co-body": "^4.0.0",
+    "koa-route": "^2.4.2",
+    "mongoose": "^4.1.11"
+  }
+}
