@@ -43,6 +43,12 @@ function *insert () {
   }
 }
 
-app.listen(3000)
+var port = process.env.PORT || 3000
+app.listen(port)
+info()
+
+function info () {
+  console.log('server listening on port ', port)
+}
 
 export default app
