@@ -45,7 +45,8 @@ function *insertTwitter () {
 }
 
 function *listRandomWords () {
-  this.body = yield getRandomWords
+  const query = this.request.query
+  this.body = yield getRandomWords(query.limit)
 }
 
 function *insertWords () {

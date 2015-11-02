@@ -51,13 +51,13 @@ export function insertAWord (word) {
   }
 }
 
-export function getRandomWords (cb) {
-  var query = Word.find()
-  query.exec(function (err, docs) {
-    console.log(err)
-    if (!err) {
-      console.log('random words | ', docs)
-      cb(null, docs)
-    }
-  })
+export function getRandomWords (limit = 10) {
+  return function (cb) {
+    Word.findRandom({}, {}, {limit: limit}, function (err, docs) {
+      if (!err) {
+        console.log('random words | ', docs)
+        cb(null, docs)
+      }
+    })
+  }
 }
