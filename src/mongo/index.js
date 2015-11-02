@@ -1,7 +1,7 @@
 
 import mongoose from 'mongoose'
 
-import Twitter from './schema'
+import { Twitter, Word } from './schema'
 
 mongoose.connect('mongodb://localhost/test')
 
@@ -31,6 +31,32 @@ export function getAllTwitters (cb) {
     console.log(err)
     if (!err) {
       console.log('all twitters', docs)
+      cb(null, docs)
+    }
+  })
+}
+
+export function insertAWord (word) {
+  return function (cb) {
+    var wd = new Word(word)
+    wd.created_date = Date.now()
+
+    wd.save (function (err) {
+      console.log(err)
+      if (!err) {
+        console.log('new word added | ', word.word)
+        cb(null, wd)
+      }
+    })
+  }
+}
+
+export function getRandomWords (cb) {
+  var query = Word.find()
+  query.exec(function (err, docs) {
+    console.log(err)
+    if (!err) {
+      console.log('random words | ', docs)
       cb(null, docs)
     }
   })

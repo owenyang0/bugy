@@ -3,7 +3,10 @@ import route from 'koa-route'
 import parse from 'co-body'
 
 import { insertATwitter
-  , getAllTwitters } from './src/mongo'
+  , getAllTwitters
+  , insertAWord
+  , getRandomWords
+} from './src/mongo'
 
 var app = koa()
 
@@ -21,23 +24,34 @@ app.use(function *(next) {
 })
 
 
-app.use(route.get('/', list))
-app.use(route.post('/twitter', insert))
+app.use(route.get('/twitter', listTwitter))
+app.use(route.post('/twitter', insertTwitter))
+
+app.use(route.get('/words', listRandomWords))
+app.use(route.post('/words', insertWords))
 
 
-function *list () {
+function *listTwitter () {
   this.body = yield getAllTwitters
 }
 
-var t = {
-  username: 'owenyang',
-  content: 'fk the world'
-}
-
-function *insert () {
+function *insertTwitter () {
   try {
     let newTwitter = yield parse(this)
     this.body = yield insertATwitter(newTwitter)
+  } catch(err) {
+    this.throw(err, 500);
+  }
+}
+
+function *listRandomWords () {
+  this.body = yield getRandomWords
+}
+
+function *insertWords () {
+  try {
+    let newWord = yield parse(this)
+    this.body = yield insertAWord(newWord)
   } catch(err) {
     this.throw(err, 500);
   }
